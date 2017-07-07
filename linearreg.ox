@@ -3,12 +3,12 @@
 # import <maximize>
 
 
-//------------------------------ LINEAR REGRESSION --------------------------------
-
 // Declaring Global variables:
 static decl s_vy;
 static decl s_vx;
-static decl N = 100;
+static const decl N = 100;
+
+//------------------------------ LINEAR REGRESSION --------------------------------
 
 linearreg01(const vPar, const adVal, const avGrad, const amHess){
 	decl b0 = vPar[0];
@@ -24,14 +24,12 @@ linearreg01(const vPar, const adVal, const avGrad, const amHess){
 		(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
 	}
 							
-
 	if(isnan(adVal[0]) || isdotinf(adVal[0])){
 		return 0;
 		} else{
 			return 1;
 		}
 }
-
 
 //---------------------------------------------------------------------------------
 
@@ -50,7 +48,6 @@ linearreg02(const vPar, const adVal, const avGrad, const amHess){
 		(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
 	}
 						
-
 	// Hessian Matrix (Newton-Raphson):
 	if(amHess){
 		(amHess[0])[0][0] = -N/sigma2;
@@ -64,15 +61,12 @@ linearreg02(const vPar, const adVal, const avGrad, const amHess){
 		(amHess[0])[2][2] = N/(2*(sigma2^2)) - (1/(sigma2^3))*sumc(s_vy - b0 - b1*s_vx);
 	}
 
-
 	if(isnan(adVal[0]) || isdotinf(adVal[0])){
 		return 0;
 		} else{
 			return 1;
 		}
 }
-
-
 
 //---------------------------------------------------------------------------------
 
@@ -91,7 +85,6 @@ linearreg03(const vPar, const adVal, const avGrad, const amHess){
 		(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
 	}
 						
-
 	// Steepest Descent:
 	if(amHess){
 		(amHess[0])[0][0] = (amHess[0])[1][1] = (amHess[0])[2][2] = -1;
@@ -156,7 +149,7 @@ main(){
 	print("\n\n\n");
 
 
-//-------------------------------- NEWTON-RAPHSON -------------------------------
+	//-------------------------------- NEWTON-RAPHSON -------------------------------
 
 	// Initial value:
 	vPar_LR_Newton = meanc(s_vy)|1|0.5;
@@ -173,7 +166,6 @@ main(){
 	print("\n\nTRUE PARAMETERS: ", "%r", {"beta0", "beta1", "sigma2"}, "%14.3f", BETA|SIGMA2);
 	print("\nML Estimators: ", "%r", {"beta0^", "beta1^", "sigma2^"}, "%14.3f", vPar_LR_Newton);
 	print("\n\n\n");
-
 
 
 	//--------------------------------- BFGS ----------------------------------------
