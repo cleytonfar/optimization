@@ -11,65 +11,65 @@ static decl s_vx;
 static decl N = 100;
 
 linearreg01(const vPar, const adVal, const avGrad, const amHess){
-						decl b0 = vPar[0];
-						decl b1 = vPar[1];
-						decl sigma2 = vPar[2];
+	decl b0 = vPar[0];
+	decl b1 = vPar[1];
+	decl sigma2 = vPar[2];
 
-						// Likelihood function to be
-						adVal[0] = -N*log(sqrt(sigma2)) - (1/(2*sigma2))*sumsqrc(s_vy - (b0 + b1*s_vx));
+	// Likelihood function to be
+	adVal[0] = -N*log(sqrt(sigma2)) - (1/(2*sigma2))*sumsqrc(s_vy - (b0 + b1*s_vx));
 						
-						if(avGrad){
-							(avGrad[0])[0] = (1/sigma2)*sumc(s_vy - (b0 + b1*s_vx));
-							(avGrad[0])[1] = (1/sigma2)*sumc((s_vy - (b0 + b1*s_vx)).*s_vx);
-							(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
-							}
+	if(avGrad){
+		(avGrad[0])[0] = (1/sigma2)*sumc(s_vy - (b0 + b1*s_vx));
+		(avGrad[0])[1] = (1/sigma2)*sumc((s_vy - (b0 + b1*s_vx)).*s_vx);
+		(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
+	}
 							
 
-						if(isnan(adVal[0]) || isdotinf(adVal[0])){
-								return 0;
-								} else{
-										return 1;
-								}
+	if(isnan(adVal[0]) || isdotinf(adVal[0])){
+		return 0;
+		} else{
+			return 1;
+		}
 }
 
 
 //---------------------------------------------------------------------------------
 
 linearreg02(const vPar, const adVal, const avGrad, const amHess){
-						decl b0 = vPar[0];
-						decl b1 = vPar[1];
-						decl sigma2 = vPar[2];
+	decl b0 = vPar[0];
+	decl b1 = vPar[1];
+	decl sigma2 = vPar[2];
 
-						// Likelihood function to be maximized:
-						adVal[0] = -N*log(sqrt(sigma2)) - (1/(2*sigma2))*sumsqrc(s_vy - (b0 + b1*s_vx));
+	// Likelihood function to be maximized:
+	adVal[0] = -N*log(sqrt(sigma2)) - (1/(2*sigma2))*sumsqrc(s_vy - (b0 + b1*s_vx));
 
-						// Gradient Vector:
-						if(avGrad){
-							(avGrad[0])[0] = (1/sigma2)*sumc(s_vy - (b0 + b1*s_vx));
-							(avGrad[0])[1] = (1/sigma2)*sumc((s_vy - (b0 + b1*s_vx)).*s_vx);
-							(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
-						}
+	// Gradient Vector:
+	if(avGrad){
+		(avGrad[0])[0] = (1/sigma2)*sumc(s_vy - (b0 + b1*s_vx));
+		(avGrad[0])[1] = (1/sigma2)*sumc((s_vy - (b0 + b1*s_vx)).*s_vx);
+		(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
+	}
 						
 
-						// Hessian Matrix (Newton-Raphson):
-						if(amHess){
-							(amHess[0])[0][0] = -N/sigma2;
-							(amHess[0])[0][1] = (-1/sigma2)*sumc(s_vx);
-							(amHess[0])[0][2] = (-1/(sigma2^2))*sumc(s_vy - (b0 + b1*s_vx));
-							(amHess[0])[1][0] =  (-1/sigma2)*sumc(s_vx);						
-							(amHess[0])[1][1] = (-1/sigma2)*sumsqrc(s_vx);
-							(amHess[0])[1][2] = (-1/(sigma2^2))*sumc((s_vy - (b0 +  b1*s_vx)) .* s_vx);
-							(amHess[0])[2][0] = (-1/(sigma2^2))*sumc(s_vy - (b0 + b1*s_vx));
-							(amHess[0])[2][1] = (-1/(sigma2^2))*sumc((s_vy - (b0 +  b1*s_vx)) .* s_vx);
-							(amHess[0])[2][2] = N/(2*(sigma2^2)) - (1/(sigma2^3))*sumc(s_vy - b0 - b1*s_vx);
-							}
+	// Hessian Matrix (Newton-Raphson):
+	if(amHess){
+		(amHess[0])[0][0] = -N/sigma2;
+		(amHess[0])[0][1] = (-1/sigma2)*sumc(s_vx);
+		(amHess[0])[0][2] = (-1/(sigma2^2))*sumc(s_vy - (b0 + b1*s_vx));
+		(amHess[0])[1][0] =  (-1/sigma2)*sumc(s_vx);						
+		(amHess[0])[1][1] = (-1/sigma2)*sumsqrc(s_vx);
+		(amHess[0])[1][2] = (-1/(sigma2^2))*sumc((s_vy - (b0 +  b1*s_vx)) .* s_vx);
+		(amHess[0])[2][0] = (-1/(sigma2^2))*sumc(s_vy - (b0 + b1*s_vx));
+		(amHess[0])[2][1] = (-1/(sigma2^2))*sumc((s_vy - (b0 +  b1*s_vx)) .* s_vx);
+		(amHess[0])[2][2] = N/(2*(sigma2^2)) - (1/(sigma2^3))*sumc(s_vy - b0 - b1*s_vx);
+	}
 
 
-						if(isnan(adVal[0]) || isdotinf(adVal[0])){
-								return 0;
-								} else{
-											return 1;
-						}
+	if(isnan(adVal[0]) || isdotinf(adVal[0])){
+		return 0;
+		} else{
+			return 1;
+		}
 }
 
 
@@ -77,33 +77,33 @@ linearreg02(const vPar, const adVal, const avGrad, const amHess){
 //---------------------------------------------------------------------------------
 
 linearreg03(const vPar, const adVal, const avGrad, const amHess){
-						decl b0 = vPar[0];
-						decl b1 = vPar[1];
-						decl sigma2 = vPar[2];
+	decl b0 = vPar[0];
+	decl b1 = vPar[1];
+	decl sigma2 = vPar[2];
 
-						// Likelihood function to be maximized:
-						adVal[0] = -N*log(sqrt(sigma2)) - (1/(2*sigma2))*sumsqrc(s_vy - (b0 + b1*s_vx));
+	// Likelihood function to be maximized:
+	adVal[0] = -N*log(sqrt(sigma2)) - (1/(2*sigma2))*sumsqrc(s_vy - (b0 + b1*s_vx));
 
-						// Gradient Vector:
-						if(avGrad){
-							(avGrad[0])[0] = (1/sigma2)*sumc(s_vy - (b0 + b1*s_vx));
-							(avGrad[0])[1] = (1/sigma2)*sumc((s_vy - (b0 + b1*s_vx)).*s_vx);
-							(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
-						}
+	// Gradient Vector:
+	if(avGrad){
+		(avGrad[0])[0] = (1/sigma2)*sumc(s_vy - (b0 + b1*s_vx));
+		(avGrad[0])[1] = (1/sigma2)*sumc((s_vy - (b0 + b1*s_vx)).*s_vx);
+		(avGrad[0])[2] = (1/(2*(sigma2^2)))*sumsqrc(s_vy - (b0 + b1*s_vx)) - (N/(2*sigma2));
+	}
 						
 
-						// Steepest Descent:
-						if(amHess){
-							(amHess[0])[0][0] = (amHess[0])[1][1] = (amHess[0])[2][2] = -1;
-							(amHess[0])[0][1] = (amHess[0])[0][2] = (amHess[0])[1][0] = (amHess[0])[1][2] = (amHess[0])[2][0] = (amHess[0])[2][1] = 0;
-							}
+	// Steepest Descent:
+	if(amHess){
+		(amHess[0])[0][0] = (amHess[0])[1][1] = (amHess[0])[2][2] = -1;
+		(amHess[0])[0][1] = (amHess[0])[0][2] = (amHess[0])[1][0] = (amHess[0])[1][2] = (amHess[0])[2][0] = (amHess[0])[2][1] = 0;
+	}
 
 
-						if(isnan(adVal[0]) || isdotinf(adVal[0])){
-								return 0;
-								} else{
-											return 1;
-						}
+	if(isnan(adVal[0]) || isdotinf(adVal[0])){
+		return 0;
+		} else{
+			return 1;
+		}
 }
 
 //---------------------------------------------------------------------------------
