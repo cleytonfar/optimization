@@ -12,11 +12,9 @@
 # DATE: June 21, 2017
 #
 # LAST MODIFIED: July 07, 2017
+#
+# AUTHOR: Cleyton Farias
 #============================================================================
-
-# Setting working directory:
-setwd('~/Dropbox/PIMES/Doutorado/1_semestre/metodos_computacionais/Projeto/')
-
 
 
 #------------------- PROBLEM 1:  ------------------------------
@@ -207,9 +205,6 @@ flag.OLS.03
 lm(Y~X)
 
 
-save.image('projeto.cribare.RData')
-
-
 
 #======================= PROBLEM 3: Logistic Regression =====================
 rm(list = ls())
@@ -268,6 +263,8 @@ fun = function(theta){
 
 
 # Optimization:
+
+# Initial Guess:
 ig.log <- c(0,0)
 #---------------------------- NELDER-MEAD -----------------------------------
 flag.logit.NM = optim(fn = fun, par = ig.log, method = "Nelder-Mead",
