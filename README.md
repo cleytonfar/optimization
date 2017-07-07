@@ -1,3 +1,6 @@
-This repository contains routine programing to perform non-optimization in R, Ox and C. 
+This repository contains programing routines to perform non-linear optimization in the folowing languages:
+  R
+  Ox 
+  C
 
-Any suggestions, please contact at cleytonfarias@outlook.com
+Any suggestions, please contact me at cleytonfarias@outlook.com
