@@ -1,5 +1,5 @@
 #============================================================================
-# PROGRAM: optimization.R
+# FILE: optimization.R
 #
 # LANGUAGE*: R
 #
