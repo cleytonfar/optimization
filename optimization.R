@@ -6,8 +6,8 @@
 # DESCIPTION: This file contains the necessary routine to perform 
 #             optimization in the following examples:
 #                - minimize the function: x*exp(-x^2 - y^2) + (x^2 + y^2)/20
-#                - maximize the log-likelihood for linear regression 
-#                - maximize the log-likelihood for logit regression
+#                - maximize the log-likelihood for a linear regression example
+#                - maximize the log-likelihood for a logit regression example
 #
 # AUTHOR: Cleyton Farias
 #
