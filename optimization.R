@@ -9,11 +9,12 @@
 #                - maximize the log-likelihood for linear regression 
 #                - maximize the log-likelihood for logit regression
 #
+# AUTHOR: Cleyton Farias
+#
 # DATE: June 21, 2017
 #
 # LAST MODIFIED: July 07, 2017
 #
-# AUTHOR: Cleyton Farias
 #============================================================================
 
 
