@@ -1,3 +1,22 @@
+/**********************************************************************************
+* FILE: linearreg.ox
+*
+* LANGUAGE: Ox
+*
+*DESCRIPTION: This file contains programming routine to perform linear
+*	      optimization. Specifically, this routine is applied to 
+*	      optimize the log-likelihood function for a linear regression.
+*             To this end, I employed three algorithms to achieve the optimal
+*             conditions of the target function. 
+*
+* AUTHOR: Cleyton Farias
+*
+* DATE: June 14, 2017
+*
+* LAST MODIFIED: July 08, 2017
+*
+**********************************************************************************/
+
 # include <oxstd.oxh>
 # include <oxprob.oxh>
 # import <maximize>
