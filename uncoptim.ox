@@ -12,58 +12,54 @@
 
 
 fun01(const vPar, const adVal, const avGrad, const amHess){
-					decl x = vPar[0];
-					decl y = vPar[1];
+	decl x = vPar[0];
+	decl y = vPar[1];
 
-					// Function to be Minimized:
-					adVal[0] = -x*exp(-x^2 - y^2) - (x^2 + y^2)/20;
+	// Function to be Minimized:
+	adVal[0] = -x*exp(-x^2 - y^2) - (x^2 + y^2)/20;
 
-
-					// Gradient Vector: 
-					if(avGrad){
-						(avGrad[0])[0] = exp(-x^2 - y^2)*(2*x^2 - 1) - x/10;
-						(avGrad[0])[1] = exp(-x^2 - y^2)*(2*x*y) - y/10;
-						}
+	// Gradient Vector: 
+	if(avGrad){
+		(avGrad[0])[0] = exp(-x^2 - y^2)*(2*x^2 - 1) - x/10;
+		(avGrad[0])[1] = exp(-x^2 - y^2)*(2*x*y) - y/10;
+	}
 	
-	
-					if( isnan(adVal[0]) || isdotinf(adVal[0]) ){
-							return 0;
-						} else{
-							return 1;
-					}
+	if( isnan(adVal[0]) || isdotinf(adVal[0]) ){
+		return 0;
+		} else{
+			return 1;
+		}
 }
 
 
 
 fun02(const vPar, const adVal, const avGrad, const amHess){
-					decl x = vPar[0];
-					decl y = vPar[1];
+		decl x = vPar[0];
+		decl y = vPar[1];
 
-						// Function to be Minimized:
-					adVal[0] = -x*exp(-x^2 - y^2) - (x^2 + y^2)/20;
+		// Function to be Minimized:
+		adVal[0] = -x*exp(-x^2 - y^2) - (x^2 + y^2)/20;
 
-
-					// Gradient Vector: 
-					if(avGrad){
-						(avGrad[0])[0] = exp(-x^2 - y^2)*(2*x^2 - 1) - x/10;
-						(avGrad[0])[1] = exp(-x^2 - y^2)*(2*x*y) - y/10;
-						}
+		// Gradient Vector: 
+		if(avGrad){
+			(avGrad[0])[0] = exp(-x^2 - y^2)*(2*x^2 - 1) - x/10;
+			(avGrad[0])[1] = exp(-x^2 - y^2)*(2*x*y) - y/10;
+		}
 	
-					
-					// Hessian Matrix:
-					if(amHess){
-						(amHess[0])[0][0] = exp(-x^2 - y^2)*(-4*x^3 + 6*x) - 1/10;
-						
-						(amHess[0])[0][1] = (amHess[0])[1][0] = exp(-x^2 - y^2)*(2*y - 4*x^2*y);
-						(amHess[0])[1][1] = (-1.0)*(exp(-x^2 - y^2)*(-2*x + 4*x*(y^2)) + 1/10);
-					}
+
+		// Hessian Matrix:
+		if(amHess){
+			(amHess[0])[0][0] = exp(-x^2 - y^2)*(-4*x^3 + 6*x) - 1/10;
+			(amHess[0])[0][1] = (amHess[0])[1][0] = exp(-x^2 - y^2)*(2*y - 4*x^2*y);
+			(amHess[0])[1][1] = (-1.0)*(exp(-x^2 - y^2)*(-2*x + 4*x*(y^2)) + 1/10);
+		}
 					
 							
-					if( isnan(adVal[0]) || isdotinf(adVal[0]) ){
-							return 0;
-						} else{
-							return 1;
-					}
+		if( isnan(adVal[0]) || isdotinf(adVal[0]) ){
+			return 0;
+			} else{
+				return 1;
+			}
 }
 
 
@@ -71,71 +67,62 @@ fun02(const vPar, const adVal, const avGrad, const amHess){
 
 
 fun03(const vPar, const adVal, const avGrad, const amHess){
-					decl x = vPar[0];
-					decl y = vPar[1];
+	decl x = vPar[0];
+	decl y = vPar[1];
 
-					// Function to be Minimized:
-					adVal[0] = -x*exp(-x^2 - y^2) - (x^2 + y^2)/20;
+	// Function to be Minimized:
+	adVal[0] = -x*exp(-x^2 - y^2) - (x^2 + y^2)/20;
 
-
-					// Gradient Vector: 
-					if(avGrad){
-						(avGrad[0])[0] = exp(-x^2 - y^2)*(2*x^2 - 1) - x/10;
-						(avGrad[0])[1] = exp(-x^2 - y^2)*(2*x*y) - y/10;
-						}
+	// Gradient Vector: 
+	if(avGrad){
+		(avGrad[0])[0] = exp(-x^2 - y^2)*(2*x^2 - 1) - x/10;
+		(avGrad[0])[1] = exp(-x^2 - y^2)*(2*x*y) - y/10;
+	}
 	
+	// STEEPEST DECENT:
+	if(amHess){
+		(amHess[0])[0][0] = -1;
+		(amHess[0])[0][1] = (amHess[0])[1][0] = 0;
+		(amHess[0])[1][1] = -1;
+	}
 
-					// STEEPEST DECENT:
-					if(amHess){
-						(amHess[0])[0][0] = -1;
-						
-						(amHess[0])[0][1] = (amHess[0])[1][0] = 0;
-						(amHess[0])[1][1] = -1;
-					}
-
-
-							
-					if( isnan(adVal[0]) || isdotinf(adVal[0]) ){
-							return 0;
-						} else{
-							return 1;
-					}
+	if( isnan(adVal[0]) || isdotinf(adVal[0]) ){
+		return 0;
+		} else{
+			return 1;
+	}
 }
 
 
 
 /*
 fun04(const vPar, const adVal, const avGrad, const amHess){
-					decl x = vPar[0];
-					decl y = vPar[1];
+	decl x = vPar[0];
+	decl y = vPar[1];
 
-					// Function to be Minimized:
-					adVal[0] = -x*exp(-x^2 - y^2) - (x^2 + y^2)/20;
+	// Function to be Minimized:
+	adVal[0] = -x*exp(-x^2 - y^2) - (x^2 + y^2)/20;
 
-
-					// Gradient Vector: 
-					if(avGrad){
-						(avGrad[0])[0] = exp(-x^2 - y^2)*(2*x^2 - 1) - x/10;
-						(avGrad[0])[1] = exp(-x^2 - y^2)*(2*x*y) - y/10;
-					}
+	// Gradient Vector: 
+	if(avGrad){
+		(avGrad[0])[0] = exp(-x^2 - y^2)*(2*x^2 - 1) - x/10;
+		(avGrad[0])[1] = exp(-x^2 - y^2)*(2*x*y) - y/10;
+	}
 	
+	// BHHH:
+	decl gg = (-1.0)*((avGrad[0])*(avGrad[0])');
+	if(amHess){
+		(amHess[0])[0][0] = gg[0][0];
+		(amHess[0])[0][1] = gg[0][1];
+		(amHess[0])[1][0] = gg[1][0];
+		(amHess[0])[1][1] = gg[1][1];
+	}
 
-					// BHHH:
-					decl gg = (-1.0)*((avGrad[0])*(avGrad[0])');
-					if(amHess){
-						(amHess[0])[0][0] = gg[0][0];
-						(amHess[0])[0][1] = gg[0][1];
-						(amHess[0])[1][0] = gg[1][0];
-						(amHess[0])[1][1] = gg[1][1];
-					}
-
-
-							
-					if( isnan(adVal[0]) || isdotinf(adVal[0]) ){
-							return 0;
-						} else{
-							return 1;
-					}
+	if( isnan(adVal[0]) || isdotinf(adVal[0]) ){
+		return 0;
+		} else{
+			return 1;
+		}
 }
 */
 
