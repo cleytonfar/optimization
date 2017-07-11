@@ -1,10 +1,10 @@
 /**********************************************************************************
-* FILE: uncoptim.c
+* FILE: problem01.c
 *
 * LANGUAGE: C
 *
 * DESCRIPTION: This file contains programming routine to perform non-linear
-*	             optimization. Specifically, I employed three algorithms to 
+*	       optimization. Specifically, I employed three algorithms to 
 *              achieve the optimal  conditions of the target function: 
 *                   f(x, y) = x*exp(-x*x - y*y) + (x*x + y*y)/10,
 *              which has no analytical solution.
