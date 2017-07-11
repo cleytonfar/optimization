@@ -149,8 +149,8 @@ main(){
 	u = ranu(N, 1);
 
 	for(i = 0; i < N; i++){
-				//print(ranseed(0), "\n");
-				s_vY[i] = quanbinomial(u[i], 1, pi[i]);
+		//print(ranseed(0), "\n");
+		s_vY[i] = quanbinomial(u[i], 1, pi[i]);
 	}
 
 	print("%c", {"Y", "pi", "X"}, s_vY~pi~s_vX, "\n");
