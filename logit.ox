@@ -3,17 +3,17 @@
 *
 * LANGUAGE: Ox
 *
-*	DESCRIPTION: This file contains programming routine to perform non-linear
-*							 optimization. Specifically, this routine is applied to 
-*							 optimize the log-likelihood function for a logistic regression.
-*              To this end, I employed three algorithms to achieve the optimal
-*              conditions of the target function. 
+* DESCRIPTION: 	This file contains programming routine to perform non-linear
+*	 	optimization. Specifically, this routine is applied to 
+*		optimize the log-likelihood function for a logistic regression.
+*              	To this end, I employed three algorithms to achieve the optimal
+*              	conditions of the target function. 
 *
 * AUTHOR: Cleyton Farias
 *
 * DATE: June 14, 2017
 *
-* LAST MODIFIED: July 08, 2017
+* LAST MODIFIED: July 11, 2017
 *
 **********************************************************************************/
 
@@ -30,89 +30,89 @@ static const decl N = 100;
 //----------------------------- LOGIT REGRESSION  ---------------------------------
 
 logit01(const vPar, const adVal, const avGrad, const amHess){
-						decl beta0 = vPar[0];
-						decl beta1 = vPar[1];
-						decl pi = exp(beta0 + beta1*s_vX) ./ (1 + exp(beta0 + beta1*s_vX)); 
+	decl beta0 = vPar[0];
+	decl beta1 = vPar[1];
+	decl pi = exp(beta0 + beta1*s_vX) ./ (1 + exp(beta0 + beta1*s_vX)); 
 
-						// log-likelihood:
-						adVal[0] = sumc(s_vY .* log(pi) + (1 - s_vY) .* log(1 - pi) );
+	// log-likelihood:
+	adVal[0] = sumc(s_vY .* log(pi) + (1 - s_vY) .* log(1 - pi) );
 
-						// Gradient vector:
-						if(avGrad){
-							(avGrad[0])[0] = sumc(s_vY - pi);
-							(avGrad[0])[1] = sumc( s_vX .* (s_vY - pi));
-						}
+	// Gradient vector:
+	if(avGrad){
+		(avGrad[0])[0] = sumc(s_vY - pi);
+		(avGrad[0])[1] = sumc( s_vX .* (s_vY - pi));
+		}
 
-						// STEEPEST DESCENT:
-						if(amHess){
-							(amHess[0])[0][0] = -1;
-							(amHess[0])[0][1] = (amHess[0])[1][0] = 0;
-							(amHess[0])[1][1] = -1;
-						}
+	// STEEPEST DESCENT:
+	if(amHess){
+		(amHess[0])[0][0] = -1;
+		(amHess[0])[0][1] = (amHess[0])[1][0] = 0;
+		(amHess[0])[1][1] = -1;
+		}
 							
 						
-						if(isnan(adVal[0]) || isdotinf(adVal[0])){
-								return 0;
-								} else{
-										return 1;
-								}
+	if(isnan(adVal[0]) || isdotinf(adVal[0])){
+		return 0;
+		} else{
+		return 1;
+	}
 }
 
 
 //---------------------------------------------------------------------------------
 
 logit02(const vPar, const adVal, const avGrad, const amHess){
-						decl beta0 = vPar[0];
-						decl beta1 = vPar[1];
-						decl pi = exp(beta0 + beta1*s_vX) ./ (1 + exp(beta0 + beta1*s_vX)); 
+	decl beta0 = vPar[0];
+	decl beta1 = vPar[1];
+	decl pi = exp(beta0 + beta1*s_vX) ./ (1 + exp(beta0 + beta1*s_vX)); 
 
-						// log-likelihood:
-						adVal[0] = sumc(s_vY .* log(pi) + (1 - s_vY) .* log(1 - pi) );
+	// log-likelihood:
+	adVal[0] = sumc(s_vY .* log(pi) + (1 - s_vY) .* log(1 - pi) );
 
-						// Gradient vector:
-						if(avGrad){
-							(avGrad[0])[0] = sumc(s_vY - pi);
-							(avGrad[0])[1] = sumc( s_vX .* (s_vY - pi));
-						}
+	// Gradient vector:
+	if(avGrad){
+		(avGrad[0])[0] = sumc(s_vY - pi);
+		(avGrad[0])[1] = sumc( s_vX .* (s_vY - pi));
+	}
 
-						// NEWTON-RAPHSON:
-						if(amHess){
-							(amHess[0])[0][0] = (-1.0)*sumc( exp(-beta0 - beta1*s_vX) .* (pi.^2) ) ;
-							(amHess[0])[0][1] = (amHess[0])[1][0] = (-1.0)*sumc( s_vX .* exp(-beta0 - beta1*s_vX) .* (pi.^2) );
-							(amHess[0])[1][1] = (-1.0)*sumc( (s_vX.^2) .* exp(-beta0 - beta1*s_vX) .* (pi.^2)  );
-						}
+	// NEWTON-RAPHSON:
+	if(amHess){
+		(amHess[0])[0][0] = (-1.0)*sumc( exp(-beta0 - beta1*s_vX) .* (pi.^2) ) ;
+		(amHess[0])[0][1] = (amHess[0])[1][0] = (-1.0)*sumc( s_vX .* exp(-beta0 - beta1*s_vX) .* (pi.^2) );
+		(amHess[0])[1][1] = (-1.0)*sumc( (s_vX.^2) .* exp(-beta0 - beta1*s_vX) .* (pi.^2)  );
+		}
 							
 						
-						if(isnan(adVal[0]) || isdotinf(adVal[0])){
-								return 0;
-								} else{
-										return 1;
-								}
+	if(isnan(adVal[0]) || isdotinf(adVal[0])){
+		return 0;
+		} else{
+			return 1;
+		}
 }
 
 
 //---------------------------------------------------------------------------------
 
 logit03(const vPar, const adVal, const avGrad, const amHess){
-						decl beta0 = vPar[0];
-						decl beta1 = vPar[1];
-						decl pi = exp(beta0 + beta1*s_vX) ./ (1 + exp(beta0 + beta1*s_vX)); 
+	decl beta0 = vPar[0];
+	decl beta1 = vPar[1];
+	decl pi = exp(beta0 + beta1*s_vX) ./ (1 + exp(beta0 + beta1*s_vX)); 
 
-						// log-likelihood:
-						adVal[0] = sumc(s_vY .* log(pi) + (1 - s_vY) .* log(1 - pi) );
+	// log-likelihood:
+	adVal[0] = sumc(s_vY .* log(pi) + (1 - s_vY) .* log(1 - pi) );
 
-						// Gradient vector:
-						if(avGrad){
-							(avGrad[0])[0] = sumc(s_vY - pi);
-							(avGrad[0])[1] = sumc( s_vX .* (s_vY - pi));
-						}
+	// Gradient vector:
+	if(avGrad){
+		(avGrad[0])[0] = sumc(s_vY - pi);
+		(avGrad[0])[1] = sumc( s_vX .* (s_vY - pi));
+	}
 
 								
-						if(isnan(adVal[0]) || isdotinf(adVal[0])){
-								return 0;
-								} else{
-										return 1;
-								}
+	if(isnan(adVal[0]) || isdotinf(adVal[0])){
+		return 0;
+		} else{
+			return 1;
+		}
 }
 
 //---------------------------------------------------------------------------------
