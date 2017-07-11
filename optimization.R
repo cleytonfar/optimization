@@ -8,16 +8,13 @@
 #             packages stats and maxLik, repespectively, in the 
 #             following examples:
 #               - minimize the function: x*exp(-x^2 - y^2) + (x^2 + y^2)/20
-#               - maximize the log-likelihood function for linear regression 
-#               - maximize the log-likelihood function for logit regression
+#               - maximize the log-likelihood function for a linear regression 
+#               - maximize the log-likelihood function for a logit regression
 #
 # DATE: June 21, 2017
 #
 # LAST MODIFIED: July 11, 2017
 #==========================================================================
-
-# Setting working directory:
-setwd('~/Dropbox/PIMES/Doutorado/1_semestre/metodos_computacionais/Projeto/')
 
 library(data.table)
 
